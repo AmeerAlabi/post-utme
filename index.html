@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>University of Ilorin Aggregate Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    #calculator {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 16px;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #3498db;
+      color: #fff;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      text-align: center;
+      display: flex;
+      margin-left: 95px;
+      margin-top: 15px;
+      align-self: center;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+  <div id="calculator">
+    <h2>Unilorin Aggregate Calculator</h2>
+    <label for="jambScore">JAMB Score (out of 400):</label>
+    <input type="number" id="jambScore" placeholder="Enter JAMB Score">
+
+    <label for="postUtmeScore">Post UTME Score (out of 100):</label>
+    <input type="number" id="postUtmeScore" placeholder="Enter Post UTME Score">
+
+    <label for="waecSubjects">WAEC Subjects (A to F, separated by spaces):</label>
+    <input type="text" id="waecSubjects" placeholder="Enter WAEC Subjects (example, A1 B2 C4 C5 B3)">
+
+    <button onclick="calculateAggregate()">Calculate Aggregate</button>
+
+    <h3>Aggregate Score:</h3>
+    <p id="result"></p>
+  </div>
+
+  <script>
+  function calculateAggregate() {
+  const jambScore = parseFloat(document.getElementById('jambScore').value) || 0;
+  const postUtmeScore = parseFloat(document.getElementById('postUtmeScore').value) || 0;
+  const waecSubjectsInput = document.getElementById('waecSubjects').value.toUpperCase();
+  const waecSubjectsArray = waecSubjectsInput.split(' ');
+
+  let waecScore = 0;
+  waecSubjectsArray.forEach(subject => {
+    switch (subject) {
+      case 'A1':
+        waecScore += 4;
+        break;
+      case 'B2':
+        waecScore += 3.6;
+        break;
+      case 'B3':
+        waecScore += 3.2;
+        break;
+      case 'C4':
+        waecScore += 2.8;
+        break;
+      case 'C5':
+        waecScore += 2.4;
+        break;
+      case 'C6':
+        waecScore += 2.0;
+        break;
+    }
+  });
+
+  const jambWeight = 50 / 100;
+  const postUtmeWeight = 30 / 100;
+  const waecWeight = 20 / 100;
+
+  const totalWeight = jambWeight + postUtmeWeight + waecWeight;
+  const aggregateScore = ((jambScore / 400) * jambWeight) + ((postUtmeScore / 100) * postUtmeWeight) + ((waecScore / 20) * waecWeight);
+
+  document.getElementById('result').innerText = `Your Aggregate Score: ${(aggregateScore * 100).toFixed(3)}%`;
+}
+
+  </script>
+</body>
+</html>
